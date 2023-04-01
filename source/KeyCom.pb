@@ -27,21 +27,25 @@ Procedure KeyComHandle()
     ProcedureReturn 2
   EndIf
     
-  VK.w = VkKeyScan_() 
+  VK.w = VkKeyScan_(KeyAsc) 
   If VK = -1 
     ProcedureReturn 
   EndIf 
   VK & $ff 
   keybd_event_(VK, Scan, Extended, 0) 
-  keybd_event_(VK, Scan, #KEYEVENTF_KEYUP | Extended, 0) 
+;   keybd_event_(VK, Scan, #KEYEVENTF_KEYUP | Extended, 0) 
 EndProcedure
 
 
 OpenConsole()
 
+If Not KeyComInit("COM4")
+  MessageRequester("ERROR","")  
+EndIf
 
-
+  
 While #True 
+  KeyComHandle()
   
 Wend
 
